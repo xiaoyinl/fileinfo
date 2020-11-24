@@ -54,6 +54,7 @@ const wchar_t g_MicrosoftSymbolServerURL[] = L"https://msdl.microsoft.com/downlo
 const wchar_t g_MozillaSymbolServerURL[] = L"https://symbols.mozilla.org/";
 const wchar_t g_ChromiumSymbolServerURL[] = L"https://chromium-browser-symsrv.commondatastorage.googleapis.com";
 const wchar_t g_Unity3dSymbolServerURL[] = L"https://symbolserver.unity3d.com/"; // Ref: https://docs.unity3d.com/Manual/WindowsDebugging.html
+const wchar_t g_ElectronJSSymbolServerURL[] = L"https://symbols.electronjs.org/"; // Ref: https://www.electronjs.org/docs/development/setting-up-symbol-server
 wstring g_symbolServerUsed = g_MicrosoftSymbolServerURL;
 const wchar_t g_localSymbolCacheDirectory[] = L"C:\\ProgramData\\dbg\\sym";
 
@@ -1198,7 +1199,8 @@ void HandleControlCommands(UINT code, HWND hwnd)
                 writeConsole(hStdout, wstring(L" [2] Mozilla Symbol Server: ") + g_MozillaSymbolServerURL + L"\n");
                 writeConsole(hStdout, wstring(L" [3] Chromium Symbol Server: ") + g_ChromiumSymbolServerURL + L"\n");
                 writeConsole(hStdout, wstring(L" [4] Unity 3D Symbol Server: ") + g_Unity3dSymbolServerURL + L"\n");
-                writeConsole(hStdout, L" [5] Enter a symbol server manually\n");
+                writeConsole(hStdout, wstring(L" [5] ElectronJS Symbol Server: ") + g_ElectronJSSymbolServerURL +L"\n");
+                writeConsole(hStdout, L" [6] Enter a symbol server manually\n");
                 writeConsole(hStdout, L"Your selection: ");
                 option = getStdin(hStdin);
                 if (option == L"1")
@@ -1218,6 +1220,10 @@ void HandleControlCommands(UINT code, HWND hwnd)
                     g_symbolServerUsed = g_Unity3dSymbolServerURL;
                 }
                 else if (option == L"5")
+                {
+                    g_symbolServerUsed = g_ElectronJSSymbolServerURL;
+                }
+                else if (option == L"6")
                 {
                     writeConsole(hStdout, L"Enter the symbol server to use: ");
                     wstring userSymbolServer = getStdin(hStdin);
